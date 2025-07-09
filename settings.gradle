@@ -1,1 +1,14 @@
-rootProject.name = 'reward'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()   // 👈 이게 꼭 필요함
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'quiz-reward'
