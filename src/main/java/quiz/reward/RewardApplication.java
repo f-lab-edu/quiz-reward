@@ -1,4 +1,4 @@
-package com.quiz.reward;
+package quiz.reward;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
