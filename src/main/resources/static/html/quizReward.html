@@ -3,80 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
     <title>퀴즈 리워드 이벤트</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            background: #f9fafb;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: start;
-            min-height: 100vh;
-        }
-        .container {
-            width: 100%;
-            max-width: 480px;
-            background: white;
-            padding: 2rem;
-            border-radius: 1.25rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-top: 2rem;
-        }
-        .title {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-        .realtime-reward {
-            font-size: 0.95rem;
-            color: #1f2937;
-            background-color: #f3f4f6;
-            padding: 0.75rem;
-            border-radius: 0.75rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-        .reward-info {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            color: #4b5563;
-            text-align: center;
-        }
-        .start-btn, .submit-btn {
-            width: 100%;
-            padding: 0.75rem;
-            font-size: 1rem;
-            background: #4f46e5;
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-        .question-block {
-            display: none;
-            text-align: left;
-            margin-top: 2rem;
-        }
-        .question {
-            font-size: 1.125rem;
-            margin: 1rem 0 0.5rem;
-        }
-        .options label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        .result {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 1rem;
-        }
-    </style>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../js/quiz.js"></script>
+
 <div class="container">
     <div class="title">🎯 퀴즈 리워드 이벤트</div>
 
@@ -86,49 +19,15 @@
     </div>
 
     <div class="reward-info">총 상금: 100,000원 | 지금 도전해서 최대 10,000원 리워드 받자!</div>
-    <button class="start-btn" onclick="startQuiz()">퀴즈 시작하기</button>
+    <button class="start-btn" id="startQuiz">퀴즈 시작하기</button>
 
     <div class="question-block" id="quizSection">
-        <div class="question">Q1. 자바에서 null을 안전하게 처리하는 키워드는?</div>
-        <div class="options">
-            <label><input type="radio" name="answer" value="1"> final</label>
-            <label><input type="radio" name="answer" value="2"> static</label>
-            <label><input type="radio" name="answer" value="3"> Optional</label>
-            <label><input type="radio" name="answer" value="4"> abstract</label>
-        </div>
-        <button class="submit-btn" onclick="submitAnswer()">정답 제출</button>
+        <div class="question" id="question">Q1. 자바에서 null을 안전하게 처리하는 키워드는?</div>
+        <input id="answer" type="text" class="input_style" placeholder="수신번호를 입력해주세요">
+        <button class="submit-btn" id="submitAnswer">정답 제출</button>
         <div class="result" id="result"></div>
     </div>
 </div>
 
-<script>
-    function startQuiz() {
-        document.getElementById('quizSection').style.display = 'block';
-        window.scrollTo({ top: document.getElementById('quizSection').offsetTop - 20, behavior: 'smooth' });
-    }
-
-    function submitAnswer() {
-        const selected = document.querySelector('input[name="answer"]:checked');
-        const resultDiv = document.getElementById('result');
-        if (!selected) {
-            resultDiv.textContent = "정답을 선택해주세요.";
-            resultDiv.style.color = "#dc2626";
-            return;
-        }
-        if (selected.value === "3") {
-            resultDiv.textContent = "🎉 정답입니다! 리워드를 획득하셨습니다.";
-            resultDiv.style.color = "#16a34a";
-        } else {
-            resultDiv.textContent = "❌ 아쉽지만 오답입니다.";
-            resultDiv.style.color = "#dc2626";
-        }
-    }
-
-    // 리워드 실시간 갱신용 함수 예시
-    function updateRewardInfo(remaining, reward) {
-        document.getElementById('remainingAmount').textContent = remaining.toLocaleString();
-        document.getElementById('currentReward').textContent = reward.toLocaleString();
-    }
-</script>
 </body>
 </html>
