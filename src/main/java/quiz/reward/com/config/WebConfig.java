@@ -4,20 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import quiz.reward.com.interceptor.CommonInterceptor;
+import quiz.reward.com.interceptor.QuizAccessInterceptor;
 
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final CommonInterceptor commonInterceptor;
+    private final QuizAccessInterceptor quizAccessInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(commonInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                );
+        registry.addInterceptor(quizAccessInterceptor)
+                .addPathPatterns("/api/quiz/start");
     }
 
 }
