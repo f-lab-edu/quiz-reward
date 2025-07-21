@@ -22,9 +22,13 @@ async function fetchCurrentQuiz() {
     if (data.message) {
         alert(data.message);
     } else {
+        const startRes = await fetch(`/api/quiz/start?quizId=${data.id}`);
+        if (!startRes.ok) {
+            alert('이미 퀴즈에 참여하셨습니다.');
+            return;
+        }
         $('#question').empty();
         $('#question').text(data.question);
-        // 또는 콘솔 확인
         console.log('퀴즈:', data);
     }
 }
