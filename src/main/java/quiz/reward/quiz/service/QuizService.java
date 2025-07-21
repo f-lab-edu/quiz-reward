@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import quiz.reward.quiz.dao.QuizDao;
+import quiz.reward.quiz.model.Quiz;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -21,16 +22,18 @@ public class QuizService {
     private final ObjectMapper objectMapper;
 
     public void openScheduledQuizzes() {
-        List<Map<String, Object>> quizzes = quizDao.findReadyQuizzes(LocalDateTime.now());
+        List<Quiz> quizzes = quizDao.findReadyQuizzes(LocalDateTime.now());
 
-        for (Map<String, Object> quiz : quizzes) {
-            Long id = ((Number) quiz.get("id")).longValue();
+        for (Quiz quiz : quizzes) {
+            Long id = quiz.getId();
             quizDao.updateStatusToOpen(id);
 
             try {
                 String key = "quiz:open:" + id;
                 String value = objectMapper.writeValueAsString(quiz);
-                redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(10));
+                long minute = 120;
+
+                redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(minute));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("퀴즈 Redis 캐싱 실패", e);
             }
